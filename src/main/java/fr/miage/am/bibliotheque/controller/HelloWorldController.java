@@ -1,4 +1,4 @@
-package fr.miage.am.bibliotheque;
+package fr.miage.am.bibliotheque.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
