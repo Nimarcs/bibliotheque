@@ -3,28 +3,30 @@ package fr.miage.am.bibliotheque.modele;
 import jakarta.el.MethodNotFoundException;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 @Entity
 @Table(name = "usager") // Nom de la table dans la base de données
 public class Usager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Pour générer l'identifiant automatiquement
-    private int id;
+    private long id;
 
+    @Column
     private String identifiant;
 
+    @Column
     private String nom;
 
+    @Column
     private String prenom;
 
+    @Column
     private String numTel;
 
+    @Column
     private String mail;
 
+    @Column
     private String adresse;
 
     //@OneToMany(mappedBy = "usager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -35,11 +37,6 @@ public class Usager {
 
 
     public Usager(String nom, String prenom, String numTel, String mail, String adresse) {
-        this(nom.toLowerCase().split(" ")[0] + /*DB.getNbIdentifiantSimilaire() +*/ 1, nom, prenom, numTel, mail, adresse);
-    }
-
-    public Usager(String identifiant, String nom, String prenom, String numTel, String mail, String adresse) {
-        this.identifiant = identifiant;
         this.nom = nom;
         this.prenom = prenom;
         this.numTel = numTel;
@@ -47,7 +44,13 @@ public class Usager {
         this.adresse = adresse;
     }
 
-    public Usager() {}
+    public Usager(String identifiant, String nom, String prenom, String numTel, String mail, String adresse) {
+        this(nom, prenom, numTel, mail, adresse);
+        this.identifiant = identifiant;
+    }
+
+    public Usager() {
+    }
 
 
     /**
@@ -86,6 +89,11 @@ public class Usager {
     */
 
     //getter setter
+
+
+    public long getId() {
+        return id;
+    }
 
     public String getIdentifiant() {
         return identifiant;
