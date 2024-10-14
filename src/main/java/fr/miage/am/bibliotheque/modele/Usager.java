@@ -1,14 +1,20 @@
 package fr.miage.am.bibliotheque.modele;
 
 import jakarta.el.MethodNotFoundException;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Entity
+@Table(name = "usager") // Nom de la table dans la base de données
 public class Usager {
 
-    //avec Getter/Setter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Pour générer l'identifiant automatiquement
+    private int id;
+
     private String identifiant;
 
     private String nom;
@@ -21,35 +27,17 @@ public class Usager {
 
     private String adresse;
 
-    //sans Getter/setter
-    private List<Emprunt> emprunts;
-    private Reservation reservation;
+    //@OneToMany(mappedBy = "usager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //private List<Emprunt> emprunts;
 
-    /**
-     * Constructeur sans identifiant, gènere un identifiant pour l'usager
-     *
-     * @param nom     nom de l'usager
-     * @param prenom  prenom de l'usager
-     * @param numTel  numero de telephone de l'usager
-     * @param mail    adresse email de l'usager
-     * @param adresse adresse de l'usager
-     */
+    //@OneToOne(mappedBy = "usager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //private Reservation reservation;
+
+
     public Usager(String nom, String prenom, String numTel, String mail, String adresse) {
-        //TODO gerer ça en DB
-        this(nom.toLowerCase().split(" ")[0] + /*DB.getNbIdentifiantSimilaire() +*/1, nom, prenom, numTel, mail, adresse);
-
+        this(nom.toLowerCase().split(" ")[0] + /*DB.getNbIdentifiantSimilaire() +*/ 1, nom, prenom, numTel, mail, adresse);
     }
 
-    /**
-     * Contructeur avec un identifiant donnée pour l'usager
-     *
-     * @param identifiant identifiant de l'usager
-     * @param nom         nom de l'usager
-     * @param prenom      prenom de l'usager
-     * @param numTel      numero de telephone de l'usager
-     * @param mail        adresse email de l'usager
-     * @param adresse     adresse de l'usager
-     */
     public Usager(String identifiant, String nom, String prenom, String numTel, String mail, String adresse) {
         this.identifiant = identifiant;
         this.nom = nom;
@@ -57,9 +45,10 @@ public class Usager {
         this.numTel = numTel;
         this.mail = mail;
         this.adresse = adresse;
-        this.emprunts = new ArrayList<>();
-        //TODO créer l'usager en DB aussi
     }
+
+    public Usager() {}
+
 
     /**
      * Recupere l'usager avec son identifiant en base de données
@@ -68,7 +57,7 @@ public class Usager {
      * @return Usager trouvé ou null
      */
     public static Usager identifier(String identifiant) {
-        //TODO DB.getUsager()
+        //TODO récupérer l'usager
         throw new MethodNotFoundException("Methode pas encore définie");
     }
 
@@ -76,6 +65,7 @@ public class Usager {
         //todo
     }
 
+    /*
     public List<Emprunt> getEmprunts() {
         return Collections.unmodifiableList(emprunts);
     }
@@ -93,7 +83,7 @@ public class Usager {
         if (reservation == null) throw new IllegalArgumentException("La reservation ne doit pas être nulle");
         this.reservation = reservation;
     }
-
+    */
 
     //getter setter
 
