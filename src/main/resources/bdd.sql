@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS usager
     PRIMARY KEY (id)
 );
 
-ALTER TABLE usager ADD CONSTRAINT identifiant_UNI UNIQUE (identifiant);
+ALTER TABLE usager ADD CONSTRAINT usager_identifiant_UNI UNIQUE (identifiant);
+ALTER TABLE usager ADD CONSTRAINT usager_mail_UNI UNIQUE (mail);
 
 CREATE FUNCTION generate_identifiant(nom VARCHAR(50))
     RETURNS VARCHAR(50)

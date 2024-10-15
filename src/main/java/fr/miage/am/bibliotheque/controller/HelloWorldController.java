@@ -12,8 +12,6 @@ public class HelloWorldController {
 
     @GetMapping("/")
     public String helloWorld() {
-        String identifiant = gestionBackOffice.creerUsager("Shore", "Jean", "0123456789", "jean.dupont@example.com", "123 Rue Exemple");
-
-        return "<b>Hello, World!</b><br>Usager créé: " + identifiant;
+        return "<b>Hello, World!</b>";
     }
 }
