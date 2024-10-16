@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Ajouter un usager</title>
+</head>
+<body>
+<h1>Formulaire d'ajout d'usager</h1>
+<form action="#" th:action="@{/addUsager}" th:object="${usager}" method="post">
+
+
+    <div>
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" th:field="*{prenom}" placeholder="Prénom" />
+    </div>
+    <div>
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" th:field="*{nom}" placeholder="Nom" />
+    </div>
+    <div>
+        <label for="num_tel">Numéro de téléphone:</label>
+        <input type="text" id="num_tel" th:field="*{numTel}" placeholder="Numéro de téléphone" />
+    </div>
+    <div>
+        <label for="mail">Email:</label>
+        <input type="text" id="mail" th:field="*{mail}" placeholder="Email" />
+    </div>
+    <div>
+        <label for="adresse">Adresse:</label>
+        <input type="text" id="adresse" th:field="*{adresse}" placeholder="Adresse" />
+    </div>
+    <div>
+        <button type="submit">Ajouter usager</button>
+    </div>
+</form>
+<a th:href="@{/}">Retourner à l'accueil</a>
+</body>
+</html>
