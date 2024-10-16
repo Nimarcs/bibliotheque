@@ -3,6 +3,7 @@ package fr.miage.am.bibliotheque.vue;
 import fr.miage.am.bibliotheque.controller.GestionBackOffice;
 import fr.miage.am.bibliotheque.modele.Usager;
 import fr.miage.am.bibliotheque.repository.UsagerRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,12 @@ public class IHMBackOffice {
 
     @PostMapping("/addUsager")
     public String submitForm(@ModelAttribute("usager") Usager usager) {
-        usagerRepository.save(usager);
+        try{
+            usagerRepository.save(usager);
+        } catch (ConstraintViolationException e){
+            System.err.println("Erreur lors de l'ajout de l'usager : " + e.getConstraintName() + " n'est pas respecté");
+            return "usagerError";
+        }
         System.out.println("Usager ajouté: " + usager.getPrenom()+ " " + usager.getNom());
         return "usagerSuccess";
     }
