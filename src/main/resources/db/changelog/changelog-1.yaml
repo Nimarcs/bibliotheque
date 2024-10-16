@@ -85,7 +85,7 @@ databaseChangeLog:
               DECLARE suffix INT DEFAULT 1;
               DECLARE final_identifiant VARCHAR(50);
               
-              SET base_identifiant = LOWER(nom);
+              SET base_identifiant = LOWER(SUBSTRING_INDEX(nom, ' ', 1));
               
               select max(un.num)
               into suffix
