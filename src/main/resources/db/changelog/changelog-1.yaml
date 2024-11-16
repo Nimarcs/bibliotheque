@@ -1,0 +1,152 @@
+databaseChangeLog:
+  - changeSet:
+      id: add_bibliotheque
+      author: Marcus
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            dbms: mysql
+      changes:
+        - sql:
+            sql: "CREATE DATABASE IF NOT EXISTS bibliotheque;"
+        - sql:
+            sql: "USE bibliotheque;"
+
+  - changeSet:
+      id: add_usager
+      author: Marcus
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: usager
+      changes:
+        - createTable:
+            tableName: usager
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: identifiant
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: nom
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: prenom
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: num_tel
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mail
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: adresse
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            columnNames: identifiant
+            tableName: usager
+            constraintName: usager_identifiant_UNI
+        - addUniqueConstraint:
+            columnNames: mail
+            tableName: usager
+            constraintName: usager_mail_UNI
+
+  - changeSet:
+      id: add_generate_identifiant
+      author: Marcus
+      changes:
+        - sql:
+            sql: |
+              DROP FUNCTION IF EXISTS generate_identifiant;
+              CREATE FUNCTION generate_identifiant(nom VARCHAR(50))
+              RETURNS VARCHAR(50)
+              DETERMINISTIC
+              BEGIN
+              DECLARE base_identifiant VARCHAR(50);
+              DECLARE suffix INT DEFAULT 1;
+              DECLARE final_identifiant VARCHAR(50);
+              
+              SET base_identifiant = LOWER(SUBSTRING_INDEX(nom, ' ', 1));
+              
+              select max(un.num)
+              into suffix
+              from (SELECT substr(identifiant, length(base_identifiant) + 1) + 1 as num
+              FROM usager
+              WHERE identifiant LIKE CONCAT(base_identifiant, '%')
+              union
+              select 1 as num from dual) as un;
+              
+              SET final_identifiant = CONCAT(base_identifiant, suffix);
+              
+              RETURN final_identifiant;
+              END;
+
+  - changeSet:
+      id: add_before_usager_insert
+      author: Marcus
+      preConditions:
+        - onFail: WARN
+        - dbms:
+            type: mariadb
+      changes:
+        - sql:
+            dbms: mariadb
+            splitStatement: false
+            endDelimiter: DONE
+            sql: |
+              CREATE TRIGGER before_usager_insert
+              BEFORE INSERT ON usager
+              FOR EACH ROW
+              BEGIN
+                IF NEW.identifiant IS NULL OR NEW.identifiant = '' THEN
+                  SET NEW.identifiant = generate_identifiant(NEW.nom);
+                END IF;
+              END;
+              # DONE
+              
+  
+
+  - changeSet:
+      id: add_usager_doe
+      author: Marcus
+      changes:
+        - insert:
+            tableName: usager
+            columns:
+              - column:
+                  name: identifiant
+                  value: "doe1"
+              - column:
+                  name: nom
+                  value: "Doe"
+              - column:
+                  name: prenom
+                  value: "John"
+              - column:
+                  name: num_tel
+                  value: "0123456789"
+              - column:
+                  name: mail
+                  value: "john.doe@example.com"
+              - column:
+                  name: adresse
+                  value: "123 Rue de l'Exemple"

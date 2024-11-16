@@ -7,11 +7,16 @@ CREATE TABLE IF NOT EXISTS usager
     identifiant VARCHAR(50) NOT NULL,
     nom         VARCHAR(50) NOT NULL,
     prenom      VARCHAR(50) NOT NULL,
-    numTel      VARCHAR(50) NOT NULL,
+    num_tel      VARCHAR(50) NOT NULL,
     mail        VARCHAR(50) NOT NULL,
     adresse     VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
+
+drop table usager;
+
+ALTER TABLE usager ADD CONSTRAINT usager_identifiant_UNI UNIQUE (identifiant);
+ALTER TABLE usager ADD CONSTRAINT usager_mail_UNI UNIQUE (mail);
 
 CREATE FUNCTION generate_identifiant(nom VARCHAR(50))
     RETURNS VARCHAR(50)
@@ -50,8 +55,9 @@ END;
 
 
 
-INSERT INTO usager (identifiant, nom, prenom, numTel, mail, adresse)
+INSERT INTO usager (identifiant, nom, prenom, num_tel, mail, adresse)
 VALUES ('u12345', 'Doe', 'John', '0123456789', 'john.doe@example.com', '123 Rue de l\'Exemple');
 
 SELECT *
 FROM usager;
+
