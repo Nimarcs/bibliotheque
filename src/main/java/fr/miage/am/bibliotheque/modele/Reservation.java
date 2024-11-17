@@ -11,11 +11,13 @@ import java.util.Date;
 @Setter
 public class Reservation {
 
-    @ManyToOne
-    Usager usager;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Pour générer l'identifiant automatiquement
     private Long id;
+
+    @ManyToOne
+    private Usager usager;
+
     @ManyToOne
     private Oeuvre oeuvre;
 

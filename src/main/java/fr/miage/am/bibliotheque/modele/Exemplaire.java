@@ -35,21 +35,12 @@ public class Exemplaire {
     @OneToMany
     private List<Emprunt> empruntList;
 
+
     public Exemplaire(Oeuvre oeuvre, Integer numero, String editeur) {
         this.oeuvre = oeuvre;
         this.numero = numero;
         this.editeur = editeur;
         this.empruntList = new ArrayList<>();
-    }
-
-    public static Exemplaire identifier(Oeuvre oeuvre) {
-        //TODO
-        return null;
-    }
-
-    public static Exemplaire identifier(Oeuvre oeuvre, Integer numero) {
-        //TODO
-        return null;
     }
 
     public boolean isDisponible() {
