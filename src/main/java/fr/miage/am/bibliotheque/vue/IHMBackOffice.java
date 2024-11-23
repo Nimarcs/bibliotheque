@@ -98,7 +98,7 @@ public class IHMBackOffice {
     public String afficherFormulaireModification(@PathVariable String identifiant, Model model) {
         Usager usager = usagerService.getUsagerByIdentifiant(identifiant);
         model.addAttribute("usager", usager);
-        return "formulaire-modification";
+        return "modifierUsager";
     }
 
     // récupère la réponse de modification d'un usager
