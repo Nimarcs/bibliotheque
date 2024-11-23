@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+  <title>Ajouter un Magazine</title>
+</head>
+<body>
+<h1>Ajouter un Magazine</h1>
+
+<form th:action="@{/addMagazine}" method="post">
+  <label for="nom">Nom :</label>
+  <input type="text" id="nom" name="nom" required/>
+
+  <label for="isbn">ISBN :</label>
+  <input type="text" id="isbn" name="isbn" required/>
+
+  <label for="datePremiereEdition">Date de première édition :</label>
+  <input type="date" id="datePremiereEdition" name="datePremiereEdition" required/>
+
+  <label for="numero">Numéro :</label>
+  <input type="number" id="numero" name="numero" required/>
+
+  <label for="edition">Edition :</label>
+  <input type="text" id="edition" name="edition" required/>
+
+  <button type="submit">Ajouter le Magazine</button>
+</form>
+
+<a th:href="@{/}">Retour à l'accueil</a>
+<br>
+<a th:href="@{/addOeuvre}">Retour à l'ajout d'une oeuvre</a>
+
+</body>
+</html>

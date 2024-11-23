@@ -33,9 +33,10 @@ public class Oeuvre {
     @Column
     private String ISBN;
 
-    protected Oeuvre(String nom, Date datePremiereEdition) {
+    protected Oeuvre(String nom, Date datePremiereEdition, String ISBN) {
         this.nom = nom;
         this.datePremiereEdition = datePremiereEdition;
+        this.ISBN = ISBN;
         this.reservationList = new LinkedList<>();
     }
 

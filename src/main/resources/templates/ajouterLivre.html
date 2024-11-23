@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Ajouter un Livre</title>
+</head>
+<body>
+<h1>Ajouter un Livre</h1>
+
+<form th:action="@{/addLivre}" method="post">
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" required/>
+
+    <label for="isbn">ISBN :</label>
+    <input type="text" id="isbn" name="isbn" required/>
+
+    <label for="datePremiereEdition">Date de première édition :</label>
+    <input type="date" id="datePremiereEdition" name="datePremiereEdition" required/>
+
+    <label for="auteur">Auteur :</label>
+    <input type="text" id="auteur" name="auteur" required/>
+
+    <button type="submit">Ajouter le Livre</button>
+</form>
+
+<a th:href="@{/}">Retour à l'ajout d'une oeuvre</a>
+<br>
+<a th:href="@{/}">Retour à l'accueil</a>
+
+</body>
+</html>

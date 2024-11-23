@@ -20,8 +20,8 @@ public class Magazine extends Oeuvre {
     @Column
     private String edition;
 
-    protected Magazine(String nom, String edition, Integer numero, Date datePremiereEdition) {
-        super(nom, datePremiereEdition);
+    public Magazine(String nom, String isbn, String edition, Integer numero, Date datePremiereEdition) {
+        super(nom, datePremiereEdition, isbn);
         this.edition = edition;
         this.numero = numero;
     }

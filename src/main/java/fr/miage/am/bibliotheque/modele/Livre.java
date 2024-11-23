@@ -17,8 +17,8 @@ public class Livre extends Oeuvre {
     @Column
     private String auteur;
 
-    public Livre(String nom, String auteur, Date datePremiereEdition) {
-        super(nom, datePremiereEdition);
+    public Livre(String nom, String isbn, String auteur, Date datePremiereEdition) {
+        super(nom, datePremiereEdition, isbn);
         this.auteur = auteur;
     }
 }

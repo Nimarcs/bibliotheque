@@ -1,15 +1,21 @@
 package fr.miage.am.bibliotheque.vue;
 
 import fr.miage.am.bibliotheque.controller.GestionBackOffice;
+import fr.miage.am.bibliotheque.modele.Livre;
+import fr.miage.am.bibliotheque.modele.Magazine;
 import fr.miage.am.bibliotheque.modele.Usager;
+import fr.miage.am.bibliotheque.repository.OeuvreRepository;
 import fr.miage.am.bibliotheque.repository.UsagerRepository;
+import fr.miage.am.bibliotheque.service.OeuvreService;
 import fr.miage.am.bibliotheque.service.UsagerService;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,7 +28,12 @@ public class IHMBackOffice {
     private UsagerService usagerService;
 
     @Autowired
+    private OeuvreService oeuvreService;
+
+    @Autowired
     private UsagerRepository usagerRepository;
+
+
 
     // affiche la page d'ajout d'un usager
     @GetMapping("/addUsager")
@@ -107,4 +118,49 @@ public class IHMBackOffice {
         usagerService.mettreAJourUsager(identifiant, usagerModifie);
         return "redirect:/usager/" + identifiant;
     }
-}
+
+    // Afficher le formulaire pour choisir le type d'œuvre
+    @GetMapping("/addOeuvre")
+    public String afficherPageTypeOeuvre() {
+        return "ajouterOeuvre"; // Page de sélection LIVRE ou MAGAZINE
+    }
+
+    // Afficher le formulaire pour ajouter un livre
+    @GetMapping("/addLivre")
+    public String afficherAjouterLivre(@ModelAttribute Livre livre) {
+        return "ajouterLivre";
+    }
+
+    // Afficher le formulaire pour ajouter un magazine
+    @GetMapping("/addMagazine")
+    public String afficherAjouterMagazine(@ModelAttribute Magazine magazine) {
+        return "ajouterMagazine";
+    }
+
+    // récupère la réponse de l'ajout d'un magazine
+    @PostMapping("/addMagazine")
+    public String addMagazine(@RequestParam String nom,
+                              @RequestParam String isbn,
+                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date datePremiereEdition,
+                              @RequestParam Integer numero,
+                              @RequestParam String edition) {
+
+        Magazine magazine = new Magazine(nom, isbn, edition, numero, datePremiereEdition);
+        this.oeuvreService.save(magazine); // Sauvegarder le magazine dans la base de données
+        return "oeuvreSuccess";
+    }
+
+    @PostMapping("/addLivre")
+    public String addLivre(@RequestParam String nom,
+                           @RequestParam String isbn,
+                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date datePremiereEdition,
+                           @RequestParam String auteur) {
+
+        Livre livre = new Livre(nom, isbn, auteur, datePremiereEdition);
+        livre.setISBN(isbn);
+        this.oeuvreService.save(livre); // Sauvegarde le livre dans la base de données
+
+        return "oeuvreSuccess";
+    }
+
+    }

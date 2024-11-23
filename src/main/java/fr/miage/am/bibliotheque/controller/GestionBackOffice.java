@@ -13,6 +13,7 @@ public class GestionBackOffice {
     @Autowired
     UsagerRepository usagerRepository;
 
+
     @Autowired
     private EntityManager entityManager;
 
