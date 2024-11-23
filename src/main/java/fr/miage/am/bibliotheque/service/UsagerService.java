@@ -34,12 +34,10 @@ public class UsagerService {
     public Usager mettreAJourUsager(String identifiant, Usager usagerModifie) {
         Usager usagerExist = usagerRepository.findByIdentifiant(identifiant)
                 .orElseThrow(() -> new IllegalArgumentException("Usager non trouvé avec l'identifiant : " + identifiant));
-
         usagerExist.setPrenom(usagerModifie.getPrenom());
         usagerExist.setNom(usagerModifie.getNom());
         usagerExist.setAdresse(usagerModifie.getAdresse());
-        // Ajoutez d'autres champs si nécessaire
-
+        usagerExist.setNumTel(usagerModifie.getNumTel());
         return usagerRepository.save(usagerExist); // Sauvegarde des modifications
     }
 }
