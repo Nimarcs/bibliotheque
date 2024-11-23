@@ -8,10 +8,9 @@ Fonctionnalités :
 
 * Usager
 - Ajouter un usager✅
-- Afficher les informations d'un usager
+- Afficher les informations d'un usager✅
 - Modifier un usager
-- Supprimer un usager
-- Identifier un usager
+- Supprimer un usager✅
 
 * Emprunt
 - Enregistrer un emprunt
