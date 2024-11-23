@@ -86,5 +86,10 @@ public class IHMBackOffice {
         return "detailUsager";
     }
 
-
+    // récupère la réponse de suppression d'un usager
+    @PostMapping("/usager/{identifiant}/supprimer")
+    public String supprimerUsager(@PathVariable String identifiant) {
+        usagerService.supprimerUsager(identifiant);
+        return "redirect:/searchUsager";
+    }
 }

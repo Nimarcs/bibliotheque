@@ -26,6 +26,8 @@ public interface UsagerRepository extends JpaRepository<Usager, Long> {
     @Override
     Usager save(Usager usager) throws ConstraintViolationException;
 
+    void deleteByIdentifiant(String identifiant);
+
     @Query("SELECT u FROM Usager u " +
             "WHERE LOWER(u.nom) LIKE LOWER(CONCAT('%', :terme, '%')) " +
             "OR LOWER(u.prenom) LIKE LOWER(CONCAT('%', :terme, '%'))")

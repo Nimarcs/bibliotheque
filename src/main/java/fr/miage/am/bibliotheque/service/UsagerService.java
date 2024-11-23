@@ -2,6 +2,7 @@ package fr.miage.am.bibliotheque.service;
 
 import fr.miage.am.bibliotheque.modele.Usager;
 import fr.miage.am.bibliotheque.repository.UsagerRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,5 +23,10 @@ public class UsagerService {
     public Usager getUsagerByIdentifiant(String identifiant) {
         return usagerRepository.findByIdentifiant(identifiant)
                 .orElseThrow(() -> new RuntimeException("Usager non trouvé pour l'identifiant : " + identifiant));
+    }
+
+    @Transactional
+    public void supprimerUsager(String identifiant) {
+        usagerRepository.deleteByIdentifiant(identifiant);
     }
 }
