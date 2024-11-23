@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Chercher un utilisateur</title>
+</head>
+<body>
+<h1>Chercher un utilisateur par nom, prénom</h1>
+<a th:href="@{/}">Retourner à l'accueil</a>
+
+<!-- Formulaire de recherche -->
+<form th:action="@{/rechercherUsager}" method="get">
+    <label for="terme">Rechercher :</label>
+    <input type="text" id="terme" name="terme" placeholder="Entrez un nom ou un prénom">
+    <button type="submit">Rechercher</button>
+</form>
+
+</body>
+</html>

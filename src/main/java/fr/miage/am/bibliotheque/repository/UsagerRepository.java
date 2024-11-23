@@ -4,8 +4,10 @@ import fr.miage.am.bibliotheque.modele.Usager;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -24,4 +26,8 @@ public interface UsagerRepository extends JpaRepository<Usager, Long> {
     @Override
     Usager save(Usager usager) throws ConstraintViolationException;
 
+    @Query("SELECT u FROM Usager u " +
+            "WHERE LOWER(u.nom) LIKE LOWER(CONCAT('%', :terme, '%')) " +
+            "OR LOWER(u.prenom) LIKE LOWER(CONCAT('%', :terme, '%'))")
+    List<Usager> rechercherParNomOuPrenomProche(@Param("terme") String terme);
 }

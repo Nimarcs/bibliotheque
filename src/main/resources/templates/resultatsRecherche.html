@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Résultats recherche</title>
+</head>
+<body>
+<h1>Usagers trouvés pour la recherche</h1>
+
+<ul th:if="${!usagers.isEmpty()}">
+    <li th:each="usager : ${usagers}">
+        <a th:href="@{/usager/{id}(id=${usager.identifiant})}" th:text="${usager.identifiant}"></a> :
+        <span th:text="${usager.prenom}"></span>
+        <span th:text="${usager.nom}"></span>,
+        <span th:text="${usager.adresse}"></span>
+    </li>
+</ul>
+
+<p th:if="${usagers.isEmpty()}">Aucun usager trouvé pour "<span th:text="${termeRecherche}"></span>".</p>
+
+<a th:href="@{/searchUsager}">Nouvelle recherche</a>
+<br>
+<a th:href="@{/}">Retourner à l'accueil</a>
+</body>
+</html>

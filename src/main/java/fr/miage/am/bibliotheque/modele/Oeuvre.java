@@ -69,6 +69,4 @@ public class Oeuvre {
         return null;
         //return Exemplaire.identifier(this);
     }
-
-
 }
