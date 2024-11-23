@@ -6,13 +6,13 @@ Fonctionnalités :
 
 ✅🟧❌
 
-* Usager
+# Usager
 - Ajouter un usager✅
 - Afficher les informations d'un usager✅
 - Modifier un usager
 - Supprimer un usager✅
 
-* Emprunt
+# Emprunt
 - Enregistrer un emprunt
 - Cas emprunt d'un exemplaire réservé
 - Annuler un emprunt
@@ -22,11 +22,11 @@ Fonctionnalités :
   - Cas rendre en retard
   - Cas rendre abimé
 
-* Oeuvre
+# Oeuvre
 - Ajouter une oeuvre (magazine/livre)
 - Supprimer une oeuvre
 
-* Exemplaire
+# Exemplaire
 - Ajouter un exemplaire
 - Modifier un exemplaire
 - Supprimer un exemplaire
