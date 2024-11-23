@@ -9,7 +9,7 @@ Fonctionnalités :
 # Usager
 - Ajouter un usager✅
 - Afficher les informations d'un usager✅
-- Modifier un usager
+- Modifier un usager✅
 - Supprimer un usager✅
 
 # Emprunt
