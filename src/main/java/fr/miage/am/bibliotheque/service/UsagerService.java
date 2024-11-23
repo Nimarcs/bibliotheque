@@ -29,4 +29,17 @@ public class UsagerService {
     public void supprimerUsager(String identifiant) {
         usagerRepository.deleteByIdentifiant(identifiant);
     }
+
+    @Transactional
+    public Usager mettreAJourUsager(String identifiant, Usager usagerModifie) {
+        Usager usagerExist = usagerRepository.findByIdentifiant(identifiant)
+                .orElseThrow(() -> new IllegalArgumentException("Usager non trouvé avec l'identifiant : " + identifiant));
+
+        usagerExist.setPrenom(usagerModifie.getPrenom());
+        usagerExist.setNom(usagerModifie.getNom());
+        usagerExist.setAdresse(usagerModifie.getAdresse());
+        // Ajoutez d'autres champs si nécessaire
+
+        return usagerRepository.save(usagerExist); // Sauvegarde des modifications
+    }
 }

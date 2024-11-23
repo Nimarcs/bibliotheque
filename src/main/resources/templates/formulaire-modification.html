@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Modifier un usager</title>
+</head>
+<body>
+<h1>Modifier les informations de l'usager</h1>
+
+<form th:action="@{/modifierUsager/{identifiant}(identifiant=${usager.identifiant})}" method="post">
+    <label for="prenom">Prénom :</label>
+    <input type="text" id="prenom" name="prenom" th:value="${usager.prenom}" required/>
+
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" th:value="${usager.nom}" required/>
+
+    <label for="adresse">Adresse :</label>
+    <input type="text" id="adresse" name="adresse" th:value="${usager.adresse}" required/>
+
+    <!-- Vous pouvez ajouter d'autres champs ici -->
+
+    <button type="submit">Enregistrer</button>
+</form>
+
+<a th:href="@{/detailsUsager/{identifiant}(identifiant=${usager.identifiant})}">Retour au détail</a>
+</body>
+</html>

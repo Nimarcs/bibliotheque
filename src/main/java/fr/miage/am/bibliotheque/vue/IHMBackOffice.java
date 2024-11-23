@@ -92,4 +92,19 @@ public class IHMBackOffice {
         usagerService.supprimerUsager(identifiant);
         return "redirect:/searchUsager";
     }
+
+    // affiche la page de modification d'un usager
+    @GetMapping("/modifierUsager/{identifiant}")
+    public String afficherFormulaireModification(@PathVariable String identifiant, Model model) {
+        Usager usager = usagerService.getUsagerByIdentifiant(identifiant);
+        model.addAttribute("usager", usager);
+        return "formulaire-modification";
+    }
+
+    // récupère la réponse de modification d'un usager
+    @PostMapping("/modifierUsager/{identifiant}")
+    public String modifierUsager(@PathVariable String identifiant, @ModelAttribute Usager usagerModifie) {
+        usagerService.mettreAJourUsager(identifiant, usagerModifie);
+        return "redirect:/usager/" + identifiant;
+    }
 }
