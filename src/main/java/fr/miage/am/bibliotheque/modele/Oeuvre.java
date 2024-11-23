@@ -18,7 +18,7 @@ import java.util.List;
 public class Oeuvre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Pour générer l'identifiant automatiquement
+    @GeneratedValue(strategy = GenerationType.AUTO) // Pour générer l'identifiant automatiquement
     private Long id;
 
     @OneToMany
@@ -66,7 +66,8 @@ public class Oeuvre {
     }
 
     public Exemplaire trouverExemplaireDisponible() {
-        return Exemplaire.identifier(this);
+        return null;
+        //return Exemplaire.identifier(this);
     }
 
 
