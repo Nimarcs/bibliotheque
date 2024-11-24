@@ -4,8 +4,10 @@ import fr.miage.am.bibliotheque.controller.GestionBackOffice;
 import fr.miage.am.bibliotheque.modele.Livre;
 import fr.miage.am.bibliotheque.modele.Magazine;
 import fr.miage.am.bibliotheque.modele.Usager;
-import fr.miage.am.bibliotheque.repository.OeuvreRepository;
+import fr.miage.am.bibliotheque.modele.Exemplaire;
+import fr.miage.am.bibliotheque.modele.Oeuvre;
 import fr.miage.am.bibliotheque.repository.UsagerRepository;
+import fr.miage.am.bibliotheque.service.ExemplaireService;
 import fr.miage.am.bibliotheque.service.OeuvreService;
 import fr.miage.am.bibliotheque.service.UsagerService;
 import org.hibernate.exception.ConstraintViolationException;
@@ -29,6 +31,9 @@ public class IHMBackOffice {
 
     @Autowired
     private OeuvreService oeuvreService;
+
+    @Autowired
+    private ExemplaireService exemplaireService;
 
     @Autowired
     private UsagerRepository usagerRepository;
@@ -161,6 +166,20 @@ public class IHMBackOffice {
         this.oeuvreService.save(livre); // Sauvegarde le livre dans la base de données
 
         return "oeuvreSuccess";
+    }
+
+    @PostMapping("/addExemplaire")
+    public String addExemplaire(@ModelAttribute Exemplaire exemplaire, Model model) {
+        exemplaireService.saveExemplaire(exemplaire);
+        return "exemplaireSuccess";
+    }
+
+    @GetMapping("/addExemplaire")
+    public String showAddExemplaireForm(Model model) {
+        List<Oeuvre> oeuvres = oeuvreService.getAllOeuvres();
+        model.addAttribute("oeuvres", oeuvres);
+        model.addAttribute("exemplaire", new Exemplaire());
+        return "addExemplaire";
     }
 
     }

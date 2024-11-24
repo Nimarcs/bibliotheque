@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Ajouter un Exemplaire</title>
+</head>
+<body>
+<h1>Ajouter un Exemplaire</h1>
+
+<form th:action="@{/addExemplaire}" method="post">
+    <label for="oeuvre">Œuvre :</label>
+    <select id="oeuvre" name="oeuvre.id" required>
+        <option value="" disabled selected>-- Sélectionnez une œuvre --</option>
+        <option th:each="oeuvre : ${oeuvres}"
+                th:value="${oeuvre.id}"
+                th:text="${oeuvre.nom}"></option>
+    </select>
+
+    <label for="numero">Numéro :</label>
+    <input type="number" id="numero" name="numero" required/>
+
+    <label for="editeur">Éditeur :</label>
+    <input type="text" id="editeur" name="editeur" required/>
+
+    <label for="etat">État :</label>
+    <select id="etat" name="etat" required>
+        <option value="" disabled selected>-- Sélectionnez un état --</option>
+        <option value="NEUF">Neuf</option>
+        <option value="ENDOMMAGE_LEGEREMENT">Légèrement endommagé</option>
+        <option value="ENDOMMAGE">Endommagé</option>
+    </select>
+
+    <button type="submit">Ajouter l'Exemplaire</button>
+</form>
+
+<a th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>

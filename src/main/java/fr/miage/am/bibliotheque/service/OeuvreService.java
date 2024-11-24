@@ -35,4 +35,8 @@ public class OeuvreService {
     public void deleteById(Long id) {
         oeuvreRepository.deleteById(id);
     }
+
+    public List<Oeuvre> getAllOeuvres() {
+        return oeuvreRepository.findAll();
+    }
 }

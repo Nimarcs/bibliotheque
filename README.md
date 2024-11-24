@@ -27,6 +27,6 @@ Fonctionnalités :
 - Supprimer une oeuvre
 
 # Exemplaire
-- Ajouter un exemplaire
+- Ajouter un exemplaire✅
 - Modifier un exemplaire
 - Supprimer un exemplaire
