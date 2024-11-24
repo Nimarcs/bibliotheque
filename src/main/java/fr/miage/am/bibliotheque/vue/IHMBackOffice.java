@@ -1,11 +1,9 @@
 package fr.miage.am.bibliotheque.vue;
 
 import fr.miage.am.bibliotheque.controller.GestionBackOffice;
-import fr.miage.am.bibliotheque.modele.Livre;
-import fr.miage.am.bibliotheque.modele.Magazine;
-import fr.miage.am.bibliotheque.modele.Usager;
-import fr.miage.am.bibliotheque.repository.OeuvreRepository;
+import fr.miage.am.bibliotheque.modele.*;
 import fr.miage.am.bibliotheque.repository.UsagerRepository;
+import fr.miage.am.bibliotheque.service.ExemplaireService;
 import fr.miage.am.bibliotheque.service.OeuvreService;
 import fr.miage.am.bibliotheque.service.UsagerService;
 import org.hibernate.exception.ConstraintViolationException;
@@ -35,7 +33,6 @@ public class IHMBackOffice {
 
     @Autowired
     private UsagerRepository usagerRepository;
-
 
 
     // affiche la page d'ajout d'un usager
