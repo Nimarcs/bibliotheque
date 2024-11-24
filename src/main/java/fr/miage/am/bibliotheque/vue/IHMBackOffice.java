@@ -3,6 +3,7 @@ package fr.miage.am.bibliotheque.vue;
 import fr.miage.am.bibliotheque.controller.GestionBackOffice;
 import fr.miage.am.bibliotheque.modele.*;
 import fr.miage.am.bibliotheque.repository.UsagerRepository;
+import fr.miage.am.bibliotheque.service.EmpruntService;
 import fr.miage.am.bibliotheque.service.ExemplaireService;
 import fr.miage.am.bibliotheque.service.OeuvreService;
 import fr.miage.am.bibliotheque.service.UsagerService;
@@ -13,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class IHMBackOffice {
@@ -32,7 +36,11 @@ public class IHMBackOffice {
     private ExemplaireService exemplaireService;
 
     @Autowired
+    private EmpruntService empruntService;
+
+    @Autowired
     private UsagerRepository usagerRepository;
+
 
 
     // affiche la page d'ajout d'un usager
@@ -52,26 +60,26 @@ public class IHMBackOffice {
     // récupère la réponse d'ajout d'un usager
     @PostMapping("/addUsager")
     public String submitForm(@ModelAttribute("usager") Usager usager) {
-        try {
+        try{
             usagerRepository.save(usager);
-        } catch (ConstraintViolationException e) {
+        } catch (ConstraintViolationException e){
             System.err.println("Erreur lors de l'ajout de l'usager : " + e.getConstraintName() + " n'est pas respecté");
             return "usagerError";
         }
-        System.out.println("Usager ajouté: " + usager.getPrenom() + " " + usager.getNom());
+        System.out.println("Usager ajouté: " + usager.getPrenom()+ " " + usager.getNom());
         return "usagerSuccess";
     }
 
     // récupère la réponse de mise à jour d'un usager
     @PostMapping("/updateUsager")
     public String updateUsager(@ModelAttribute("usager") Usager usager) {
-        try {
+        try{
             usagerRepository.save(usager);
-        } catch (ConstraintViolationException e) {
+        } catch (ConstraintViolationException e){
             System.err.println("Erreur lors de la mise à jour de l'usager : " + e.getConstraintName() + " n'est pas respecté");
             return "usagerError";
         }
-        System.out.println("Usager mis à jour: " + usager.getPrenom() + " " + usager.getNom());
+        System.out.println("Usager mis à jour: " + usager.getPrenom()+ " " + usager.getNom());
         return "usagerSuccess";
     }
 
@@ -123,18 +131,6 @@ public class IHMBackOffice {
     @GetMapping("/addOeuvre")
     public String afficherPageTypeOeuvre() {
         return "ajouterOeuvre"; // Page de sélection LIVRE ou MAGAZINE
-    }
-
-    // récupère la réponse de suppression d'une oeuvre
-    @PostMapping("/oeuvre/supprimer")
-    public String supprimerOeuvre(@RequestParam String ISBN) {
-        try {
-            oeuvreService.supprimerOeuvre(ISBN);
-        } catch (NullPointerException e) {
-            System.err.println("Erreur lors de la suppression de l'oeuvre : " + e.getMessage());
-            return "oeuvreError";
-        }
-        return "redirect:/addOeuvre";
     }
 
     // Afficher le formulaire pour ajouter un livre
@@ -189,6 +185,58 @@ public class IHMBackOffice {
         return "addExemplaire";
     }
 
-}
+    @GetMapping("/addEmprunt")
+    public String showAddEmpruntForm(Model model) {
+        model.addAttribute("oeuvres", oeuvreService.getAllOeuvres());
+        model.addAttribute("emprunt", new Emprunt());
+        return "addEmprunt";
+    }
+
+    @PostMapping("/addEmprunt")
+    public String addEmprunt(@RequestParam Long oeuvreId,
+                             @RequestParam String usagerIdentifiant,
+                             @RequestParam Integer exemplaireNumero,
+                             @RequestParam String dateRetourPrevu) {
+        // Récupérer l'œuvre
+        Oeuvre oeuvre = oeuvreService.getOeuvreById(oeuvreId)
+                .orElseThrow(() -> new RuntimeException("Œuvre introuvable avec l'ID : " + oeuvreId));
+
+        // Récupérer l'usager
+        Usager usager = usagerService.getUsagerByIdentifiant(usagerIdentifiant);
+        if (usager == null) {
+            return "redirect:/addEmprunt?error=usager";
+        }
+
+        // Récupérer l'exemplaire
+        Optional<Exemplaire> optionalExemplaire = exemplaireService.identifier(oeuvre, exemplaireNumero);
+        if (optionalExemplaire.isEmpty()) {
+            return "redirect:/addEmprunt?error=exemplaire";
+        }
+
+        Exemplaire exemplaire = optionalExemplaire.get();
+
+        // Convertir la date prévue
+        Date retourPrevuDate;
+        try {
+            retourPrevuDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateRetourPrevu);
+        } catch (ParseException e) {
+            return "redirect:/addEmprunt?error=invalidDate";
+        }
+
+        // Créer l'emprunt
+        Emprunt emprunt = new Emprunt();
+        emprunt.setExemplaire(exemplaire); // Exemplaire est bien présent
+        emprunt.setUsager(usager);
+        emprunt.setDateRetourPrevu(retourPrevuDate);
+        empruntService.saveEmprunt(emprunt);
+
+        return "empruntSuccess";
+    }
 
 
+    @GetMapping("/empruntSuccess")
+    public String showSuccessPage() {
+        return "empruntSuccess";
+    }
+
+    }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Ajouter un Emprunt</title>
+</head>
+<body>
+<h1>Ajouter un Emprunt</h1>
+
+<form th:action="@{/addEmprunt}" method="post">
+    <label for="oeuvre">Œuvre :</label>
+    <select id="oeuvre" name="oeuvreId" required>
+        <option value="" disabled selected>-- Sélectionnez une œuvre --</option>
+        <option th:each="oeuvre : ${oeuvres}"
+                th:value="${oeuvre.id}"
+                th:text="${oeuvre.nom}"></option>
+    </select>
+
+    <label for="usagerIdentifiant">Identifiant de l'Usager :</label>
+    <input type="text" id="usagerIdentifiant" name="usagerIdentifiant" required/>
+
+    <label for="exemplaireNumero">Numéro de l'Exemplaire :</label>
+    <input type="number" id="exemplaireNumero" name="exemplaireNumero" required/>
+
+    <label for="dateRetourPrevu">Date de Retour Prévue :</label>
+    <input type="date" id="dateRetourPrevu" name="dateRetourPrevu" required/>
+
+    <button type="submit">Enregistrer l'Emprunt</button>
+</form>
+
+<a th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>

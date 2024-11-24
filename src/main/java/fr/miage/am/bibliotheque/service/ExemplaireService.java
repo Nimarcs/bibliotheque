@@ -5,6 +5,7 @@ import fr.miage.am.bibliotheque.modele.Oeuvre;
 import fr.miage.am.bibliotheque.repository.ExemplaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +23,7 @@ public class ExemplaireService {
         return exemplaireStream.filter(Exemplaire::isDisponible).findFirst();
     }
 
+    @Transactional(readOnly = true)
     public Optional<Exemplaire> identifier(Oeuvre oeuvre, Integer numero) {
         Stream<Exemplaire> exemplaireStream = exemplaireRepository.findByOeuvre(oeuvre.getId());
         List<Exemplaire> exemplaireList = exemplaireStream.filter(exemplaire -> Objects.equals(exemplaire.getNumero(), numero)).toList();
