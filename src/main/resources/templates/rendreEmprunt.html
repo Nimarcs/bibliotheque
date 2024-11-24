@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<link href="/css/style.css" rel="stylesheet"/>
+<head>
+    <title>Rendre un Emprunt</title>
+</head>
+<body>
+<h1>Rendre un Emprunt</h1>
+
+<form method="post" th:action="@{/rendreEmprunt}">
+    <label for="emprunt">Emprunt :</label>
+    <select id="emprunt" name="empruntId" required>
+        <option disabled selected value="">-- Sélectionnez une œuvre --</option>
+        <option th:each="emprunt : ${emprunts}"
+                th:text="${emprunt.exemplaire != null && emprunt.exemplaire.oeuvre != null ? emprunt.exemplaire.oeuvre.nom + ' (' + emprunt.exemplaire.numero + ') ' + emprunt.exemplaire.etat : 'Informations manquantes'}"
+                th:value="${emprunt.id}"></option>
+        <!--"${emprunt.exemplaire.oeuvre.nom} (${emprunt.exemplaire.numero})  ${emprunt.exemplaire.etat}"-->
+    </select>
+
+    <label for="nouvelEtat">Etat à l'arrivée :</label>
+    <select id="nouvelEtat" name="nouvelEtat" required>
+        <option disabled selected value="">-- Sélectionnez l'etat --</option>
+        <option th:each="etat : ${etats}"
+                th:text="${etat}"
+                th:value="${etat}"></option>
+    </select>
+
+    <button type="submit">rendre l'emprunt</button>
+</form>
+
+<a th:href="@{/}">Retour à l'accueil</a>
+</body>
+</html>

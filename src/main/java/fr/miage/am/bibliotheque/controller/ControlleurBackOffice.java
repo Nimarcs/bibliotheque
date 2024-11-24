@@ -37,6 +37,10 @@ public class ControlleurBackOffice {
     @Autowired
     private UsagerRepository usagerRepository;
 
+    @GetMapping("/")
+    public String acceuil() {
+        return "accueil";
+    }
 
     // affiche la page d'ajout d'un usager
     @GetMapping("/addUsager")
@@ -238,6 +242,30 @@ public class ControlleurBackOffice {
         empruntService.saveEmprunt(emprunt);
 
         return "empruntSuccess";
+    }
+
+    @GetMapping("/rendreEmprunt")
+    public String showRendreEmpruntForm(Model model) {
+        model.addAttribute("emprunts", empruntService.getAllEmpruntEnCours());
+        model.addAttribute("etats", Etat.NEUF.getDeclaringClass().getEnumConstants());
+
+        return "rendreEmprunt";
+    }
+
+    @PostMapping("/rendreEmprunt")
+    public String rendreEmprunt(@RequestParam Long empruntId,
+                                @RequestParam Etat nouvelEtat) {
+        // Récupérer l'emprunt
+        Emprunt emprunt = empruntService.getEmpruntById(empruntId)
+                .orElseThrow(() -> new RuntimeException("Emprunt introuvable avec l'ID : " + empruntId));
+
+        Exemplaire exemplaire = emprunt.getExemplaire();
+        exemplaire.setEtat(nouvelEtat);
+        exemplaireService.saveExemplaire(exemplaire);
+
+        empruntService.rendre(emprunt);
+
+        return "rendreSuccess";
     }
 
 
