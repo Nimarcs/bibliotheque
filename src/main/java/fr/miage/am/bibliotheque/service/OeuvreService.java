@@ -54,4 +54,8 @@ public class OeuvreService {
         //TODO remplacer par supprimer de service pas du répository pour continuer l'effet boule de neige
         oeuvreRepository.deleteById(oeuvre.get().getId());
     }
+
+    public List<Oeuvre> getAllOeuvres() {
+        return oeuvreRepository.findAll();
+    }
 }

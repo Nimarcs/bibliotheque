@@ -29,4 +29,9 @@ public class ExemplaireService {
             throw new IllegalStateException("Multiple exemplaire trouve avec " + oeuvre.getNom() + " n°" + numero);
         return Optional.ofNullable(exemplaireList.size() == 1 ? exemplaireList.getFirst() : null);
     }
+
+    public void saveExemplaire(Exemplaire exemplaire) {
+        exemplaireRepository.save(exemplaire);
+    }
+
 }

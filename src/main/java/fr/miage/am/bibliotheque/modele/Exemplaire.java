@@ -29,8 +29,6 @@ public class Exemplaire {
     private Date dateMiseHorsService;
     @Column
     private Etat etat;
-    @Column
-    private String ISBN;
 
     @OneToMany
     private List<Emprunt> empruntList;
@@ -55,6 +53,11 @@ public class Exemplaire {
 
     private Optional<Emprunt> trouverEmpruntEnCours() {
         return empruntList.stream().filter(emprunt -> emprunt.getDateRetourReel() != null).findFirst();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.dateCreation = new Date();
     }
 
     public List<Emprunt> getEmprunts() {
