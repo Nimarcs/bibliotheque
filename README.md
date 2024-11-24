@@ -23,7 +23,7 @@ Fonctionnalités :
   - Cas rendre abimé
 
 # Oeuvre
-- Ajouter une oeuvre (magazine/livre)
+- Ajouter une oeuvre (magazine/livre)✅
 - Supprimer une oeuvre
 
 # Exemplaire
