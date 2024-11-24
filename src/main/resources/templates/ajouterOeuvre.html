@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<link href="/css/style.css" rel="stylesheet"/>
 <head>
     <meta charset="UTF-8">
     <title>Ajouter une Œuvre</title>
@@ -16,12 +17,9 @@
     <label for="ISBN">Supprimer :</label>
     <input id="ISBN" name="ISBN" placeholder="Entrez l'ISBN de l'oeuvre" type="text">
     <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet oeuvre ? Tout les exemplaires associé seront également supprimé');"
-            type="submit">Rechercher
+            type="submit">Supprimer
     </button>
 </form>
-<form method="post" th:action="@{/oeuvre/supprimer}">
-    <button onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet usager ?');" type="submit">Supprimer
-    </button>
-</form>
+<a th:href="@{/}">Retourner à l'accueil</a>
 </body>
 </html>
