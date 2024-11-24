@@ -1,6 +1,5 @@
-package fr.miage.am.bibliotheque.vue;
+package fr.miage.am.bibliotheque.controller;
 
-import fr.miage.am.bibliotheque.controller.GestionBackOffice;
 import fr.miage.am.bibliotheque.modele.*;
 import fr.miage.am.bibliotheque.repository.UsagerRepository;
 import fr.miage.am.bibliotheque.service.EmpruntService;
@@ -21,10 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class IHMBackOffice {
-
-    @Autowired
-    GestionBackOffice gestionBackOffice;
+public class ControlleurBackOffice {
 
     @Autowired
     private UsagerService usagerService;
@@ -59,9 +55,9 @@ public class IHMBackOffice {
     // récupère la réponse d'ajout d'un usager
     @PostMapping("/addUsager")
     public String submitForm(@ModelAttribute("usager") Usager usager) {
-        try{
+        try {
             usagerRepository.save(usager);
-        } catch (ConstraintViolationException e){
+        } catch (ConstraintViolationException e) {
             System.err.println("Erreur lors de l'ajout de l'usager : " + e.getConstraintName() + " n'est pas respecté");
             return "usagerError";
         }
