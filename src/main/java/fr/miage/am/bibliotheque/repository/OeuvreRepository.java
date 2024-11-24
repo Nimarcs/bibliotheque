@@ -22,6 +22,8 @@ public interface OeuvreRepository extends JpaRepository<Oeuvre, Long> {
     @Override
     Optional<Oeuvre> findById(Long id);
 
+    void deleteById(Long id);
+
     @Override
     Oeuvre save(Oeuvre oeuvre) throws ConstraintViolationException;
 

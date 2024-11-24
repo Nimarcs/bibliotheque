@@ -42,7 +42,6 @@ public class IHMBackOffice {
     private UsagerRepository usagerRepository;
 
 
-
     // affiche la page d'ajout d'un usager
     @GetMapping("/addUsager")
     public String showForm(Model model) {
@@ -66,20 +65,20 @@ public class IHMBackOffice {
             System.err.println("Erreur lors de l'ajout de l'usager : " + e.getConstraintName() + " n'est pas respecté");
             return "usagerError";
         }
-        System.out.println("Usager ajouté: " + usager.getPrenom()+ " " + usager.getNom());
+        System.out.println("Usager ajouté: " + usager.getPrenom() + " " + usager.getNom());
         return "usagerSuccess";
     }
 
     // récupère la réponse de mise à jour d'un usager
     @PostMapping("/updateUsager")
     public String updateUsager(@ModelAttribute("usager") Usager usager) {
-        try{
+        try {
             usagerRepository.save(usager);
-        } catch (ConstraintViolationException e){
+        } catch (ConstraintViolationException e) {
             System.err.println("Erreur lors de la mise à jour de l'usager : " + e.getConstraintName() + " n'est pas respecté");
             return "usagerError";
         }
-        System.out.println("Usager mis à jour: " + usager.getPrenom()+ " " + usager.getNom());
+        System.out.println("Usager mis à jour: " + usager.getPrenom() + " " + usager.getNom());
         return "usagerSuccess";
     }
 
@@ -131,6 +130,18 @@ public class IHMBackOffice {
     @GetMapping("/addOeuvre")
     public String afficherPageTypeOeuvre() {
         return "ajouterOeuvre"; // Page de sélection LIVRE ou MAGAZINE
+    }
+
+    // récupère la réponse de suppression d'une oeuvre
+    @PostMapping("/oeuvre/supprimer")
+    public String supprimerOeuvre(@RequestParam String ISBN) {
+        try {
+            oeuvreService.supprimerOeuvre(ISBN);
+        } catch (NullPointerException e) {
+            System.err.println("Erreur lors de la suppression de l'oeuvre : " + e.getMessage());
+            return "oeuvreError";
+        }
+        return "redirect:/addOeuvre";
     }
 
     // Afficher le formulaire pour ajouter un livre
@@ -239,4 +250,4 @@ public class IHMBackOffice {
         return "empruntSuccess";
     }
 
-    }
+}
