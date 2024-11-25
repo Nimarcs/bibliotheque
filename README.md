@@ -19,7 +19,7 @@ Fonctionnalités :
 - Cas emprunt d'un exemplaire réservé
 - Annuler un emprunt
 - Réserver une oeuvre
-- Rendre un exemplaire
+- Rendre un exemplaire✅
     - Cas rendre un exemplaire réservé
     - Cas rendre en retard
     - Cas rendre abimé
