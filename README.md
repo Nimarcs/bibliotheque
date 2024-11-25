@@ -1,36 +1,48 @@
-# bibliotheque
+# Bibliothèque - Application Java Spring Boot
 
-TP1 patron de conception
+## Description
 
-Fonctionnalités :
+Ceci est le TP1 du cours de patron de conception
+Ce projet est une application Java Spring Boot qui utilise Hibernate comme ORM (Object-Relational Mapping) et Maven comme outil de gestion de dépendances. Il est conçu pour gérer les fonctionnalités d'une bibliothèque, en se connectant à une base de données MySQL.
 
-✅🟧❌
+## Prérequis
 
-# Usager
+Avant de commencer, assurez-vous d'avoir les outils suivants installés sur votre machine :
 
-- Ajouter un usager✅
-- Afficher les informations d'un usager✅
-- Modifier un usager✅
-- Supprimer un usager✅
+- [Java 17+](https://www.oracle.com/java/technologies/javase-downloads.html) (ou une version compatible avec votre configuration Spring Boot)
+- [Apache Maven 3.6+](https://maven.apache.org/download.cgi)
+- [MySQL Server 8.0+](https://dev.mysql.com/downloads/mysql/)
+(Xampp permet d'heberger localement le serveur)
 
-# Emprunt
+## Installation
 
-- Enregistrer un emprunt✅
-- Cas emprunt d'un exemplaire réservé
-- Annuler un emprunt
-- Réserver une oeuvre
-- Rendre un exemplaire✅
-    - Cas rendre un exemplaire réservé
-    - Cas rendre en retard
-    - Cas rendre abimé
+### Étape 1 : Cloner le projet
 
-# Oeuvre
+Clonez ce dépôt en local :
 
-- Ajouter une oeuvre (magazine/livre)✅
-- Supprimer une oeuvre✅
+```bash
+git clone <url-du-repo>
+cd bibliotheque
+```
 
-# Exemplaire
+## Configurer la base de données
 
-- Ajouter un exemplaire✅
-- Modifier un exemplaire
-- Supprimer un exemplaire
+Connectez-vous à votre serveur MySQL et créez une base de données appelée bibliotheque
+```sql
+CREATE DATABASE bibliotheque;
+```
+
+Vérifiez les informations de connexion dans le fichier application.properties situé dans src/main/resources/
+
+## Lancement
+
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+
+## Auteur
+
+Alexis Lopes Vaz - Marcus Richier
+Projet Bibliothèque - Patron de Conception 
+
